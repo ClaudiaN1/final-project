@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: head"></head>
+
+<body>
+<!--
+<nav th:replace="layouts :: navbar"></nav>
+-->
+
+<div class="container">
+        <h1>First Of All... We VOTE </h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="candidate : ${candidateList}">
+            <td th:text="${candidate.candidateId}"/>
+            <td th:text="${candidate.candidateName.firstName}"/>
+        </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+        <tr>
+            <th>CandidateID</th>
+            <th>     </th>
+            <th>Nr. of voters</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="candidate : ${candidates}">
+            <td th:text="${candidate[0]}"/>
+            <td th:text="${candidate[1]}"/>
+        </tr>
+        <tr>
+            <th>Total voters</th>
+            <th th:text="${voterCount}"></th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

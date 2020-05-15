@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: head"></head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>Voters</h3>
+    <hr>
+    <a th:href="@{/voter/new}"
+       class="btn btn-light btn-sm mb-3">
+        New Voter
+    </a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th>Voter Name</th>
+            <th>Last Name</th>
+            <th>CNP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="voters : ${voters}">
+            <td th:text="${voters.voterName.firstName}"/>
+            <td th:text="${voters.voterName.lastName}"/>
+            <td th:text="${voters.voterCnp.cnp}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

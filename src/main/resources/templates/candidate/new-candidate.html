@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="layoutsAdmin :: head"></head>
+
+<body>
+<nav th:replace="layoutsAdmin :: navbar"></nav>
+
+
+<div class="container" id="parent">
+    <span class="form-heading"></span>
+    <form action="/candidate/save" id="form_candidate" th:object="${candidate}" method="post">
+        <h1>Candidate registration</h1>
+        <input type="hidden" th:field="*{candidateId}"/>
+        <div>
+            <label>
+                <span for="name">Name </span>
+                <input type="text" id="name" placeholder="First name Candidate"
+                       th:field="*{candidateName.firstName}">
+                <input type="text" placeholder="Last name Candidate"
+                       th:field="*{candidateName.lastName}">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <span for="data">Data</span>
+                <input type="text" id="data" placeholder="CNP" th:field="*{candidateCnp.cnp}"
+                       pattern="^(2|1)([0-9]{12})"
+                       title="Personal authentication number must start with number 1 or 2 and must contain 13 characters(0-9)">
+
+                <input type="text" placeholder="Series" th:field="*{candidateSeriesNumbers.series}"
+                       pattern="([a-zA-Z]*{2})"
+                       title="Series must contains 2 letters"
+                       style="text-transform:uppercase"
+                       onblur="this.value=this.value.toUpperCase()">
+
+                <input type="text" placeholder="Number" th:field="*{candidateSeriesNumbers.numbers}"
+                       pattern="([0-9]*{6})"
+                       title="Number must contains 6 characters(0-9)">
+            </label>
+        </div>
+
+        <!--<div>
+            <label>
+                <span for="address">Address</span>
+                <input type="text" id="address" placeholder="Street address"
+                       th:field="${candidate.candidateAddress.street}">
+                <input type="text" placeholder="Building Number "
+                       th:field="${candidate.candidateAddress.buildingNumber}">
+                <input type="text" placeholder="Stair Case" th:field="${candidate.candidateAddress.stairCase}">
+                <input type="text" placeholder="Apartment " th:field="${candidate.candidateAddress.apartment}">
+            </label>
+        </div>
+-->
+        <!--
+                <button type="submit" class="button"> Submit</button>
+        -->
+
+        <!--1<div class="svg-wrapper">
+            <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+                <rect id="shape" height="40" width="150"/>
+                <div id="text">
+                    <a href=""><span class="spot"></span>Button 1</a>
+                </div>
+            </svg>
+        </div>-->
+
+        <div class="wrapper">
+            <button class="button" type="submit">Submit</button>
+        </div>
+        <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+                <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+                </filter>
+            </defs>
+        </svg>
+
+    </form>
+</div>
+</body>
+
+
+
+</html>

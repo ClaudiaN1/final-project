@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="layoutsAdmin :: head"></head>
+
+<body>
+<nav th:replace="layoutsAdmin :: navbar"></nav>
+
+<div id="wrapper" class="container">
+    <h1>Candidates List</h1>
+
+    <table id="keywords" cellspacing="0" cellpadding="0" class="table table-bordered table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th><span>Last Name</span></th>
+            <th><span>CNP</span></th>
+            <th><span>Series</span></th>
+            <th><span>Number</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="lalign" th:text="${candidate.candidateId}">
+            <td class="lalign" th:text="${candidate.candidateName.firstName}">
+            <td class="lalign" th:text="${candidate.candidateName.lastName}">
+            <td class="lalign" th:text="${candidate.candidateCnp.cnp}">
+            <td class="lalign" th:text="${candidate.candidateSeriesNumbers.series}">
+            <td class="lalign" th:text="${candidate.candidateSeriesNumbers.numbers}">
+        </tr>
+        </tbody>
+    </table>
+    <div class="wrapper">
+        <button onclick="goBack()">Go Back</button>
+        <a th:href="${'/candidate/edit/'+ candidate.candidateId}"
+           class="btn btn-light btn-sm mb-3">
+            Edit
+        </a>
+    </div>
+</div>
+<!--<div class="container">
+    <h2>Candidate Details</h2>
+    <div>
+        <form class="form-horizontal">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Candidate Id:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" th:text="${candidate.candidateId}">Candidate Id</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First Name:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static " th:text="${candidate.candidateName.firstName}">First Name</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Last Name:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static " th:text="${candidate.candidateName.lastName}">Last Name</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">CNP:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static " th:text="${candidate.candidateCnp.cnp}">Cnp</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Series:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static " th:text="${candidate.candidateSeriesNumbers.series}">Series</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Number:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static " th:text="${candidate.candidateSeriesNumbers.numbers}">Numbers</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="wrapper">
+        <button onclick="goBack()">Go Back</button>
+    </div>
+</div>-->
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+
+</html>

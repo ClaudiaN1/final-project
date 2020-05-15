@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: head"></head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<div class="container" id="parent">
+    <form action="/voter/save" id="form_voter" th:object="${voter}" method="POST">
+        <h1>Voter registration</h1>
+
+        <div>
+            <label>
+                <span for="name">Name </span>
+                <input type="text" id="name" placeholder="First name Voter"
+                       th:field="${voter.voterName.firstName}">
+
+                <input type="text" placeholder="Last name Voter"
+                       th:field="${voter.voterName.lastName}">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <span for="data">Data</span>
+                <input type="text" id="data" placeholder="CNP" th:field="${voter.voterCnp.cnp}"
+                       pattern="^(2|1)([0-9]{12})"
+                       title="Personal authentication number must start with number 1 or 2 and must contain 13 characters(0-9)">
+
+                <input type="text" placeholder="Series" th:field="${voter.voterSeriesNumbers.series}"
+                       pattern="([a-zA-Z]{2})"
+                       title="Series must contains 2 letters"
+                       style="text-transform:uppercase"
+                       onblur="this.value=this.value.toUpperCase()">
+
+                <input type="text" placeholder="Number" th:field="${voter.voterSeriesNumbers.numbers}"
+                       pattern="([0-9]{6})"
+                       title="Number must contains 6 characters(0-9)">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <span for="address">Address</span>
+                <input type="text" id="address" placeholder="Street address"
+                       th:field="${voter.voterAddress.street}">
+                <input type="text" placeholder="Building Number "
+                       th:field="${voter.voterAddress.buildingNumber}">
+                <input type="text" placeholder="Stair Case" th:field="${voter.voterAddress.stairCase}">
+                <input type="text" placeholder="Apartment " th:field="${voter.voterAddress.apartment}">
+
+                <label>
+                    <span>Choose a Candidate</span>
+                    <select th:field="*{candidates}" multiple="multiple">
+                        <option th:each="candidate:${allCandidates}"
+                                th:value="${candidate.candidateId}"
+                                th:text="${candidate.candidateName.firstName}">
+                        </option>
+                    </select>
+                </label>
+            </label>
+
+        </div>
+
+        <button type="submit"> Submit</button>
+    </form>
+</div>
+</body>
+
+</html>

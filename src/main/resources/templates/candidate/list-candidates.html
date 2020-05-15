@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layoutsAdmin :: head"></head>
+
+<body>
+<nav th:replace="layoutsAdmin :: navbar"></nav>
+
+<div class="container">
+    <a th:href="@{/candidate/new}"
+       class="btn btn-light btn-sm mb-3">
+        New Candidate
+    </a>
+    <div th:if="${not #lists.isEmpty(candidates)}">
+        <h3>Candidates</h3>
+        <hr>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th>Candidate Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="candidates : ${candidates}">
+                <td th:text="${candidates.candidateName.firstName}"/>
+                <td th:text="${candidates.candidateName.lastName}"/>
+                <td>
+                    <a th:href="${'/candidate/' + candidates.candidateId}"
+                       class="btn btn-light btn-sm mb-3">
+                        View
+                    </a>
+                    <a th:href="${'/candidate/edit/'+ candidates.candidateId}"
+                       class="btn btn-light btn-sm mb-3">
+                        Edit
+                    </a>
+                    <a th:href="${'/candidate/delete/' + candidates.candidateId}"
+                       class="btn btn-light btn-sm mb-3">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
