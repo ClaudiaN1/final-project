@@ -10,4 +10,12 @@ public class SeriesNumbers {
 
     private String series;
     private String numbers;
+
+    public SeriesNumbers(String series, String numbers) {
+        this.series = series;
+        this.numbers = numbers;
+    }
+
+    public SeriesNumbers() {
+    }
 }

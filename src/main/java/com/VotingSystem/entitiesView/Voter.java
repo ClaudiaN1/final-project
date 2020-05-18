@@ -8,8 +8,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -54,4 +52,5 @@ public class Voter {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Candidate candidate;
+
 }

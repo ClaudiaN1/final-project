@@ -7,6 +7,26 @@
 <nav th:replace="layoutsAdmin :: navbar"></nav>
 
 <div class="container">
+    <h2>FileUpload</h2>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successmessage}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${successmessage}"></strong>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errormessage}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${errormessage}"></strong>
+    </div>
+    <form action="/candidate/fileupload" th:object="${candidate}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="fileupload"> File Upload(EXCEL or CVS or JSON)</label>
+            <input type="file" class="form-control" id="fileupload" name="file" th:field="*{file}">
+        </div>
+        <button type="submit" class="btn btn-primary"> Submit</button>
+    </form>
     <a th:href="@{/candidate/new}"
        class="btn btn-light btn-sm mb-3">
         New Candidate
@@ -19,6 +39,7 @@
             <tr>
                 <th>Candidate Name</th>
                 <th>Last Name</th>
+                <th>File Type</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -26,6 +47,7 @@
             <tr th:each="candidates : ${candidates}">
                 <td th:text="${candidates.candidateName.firstName}"/>
                 <td th:text="${candidates.candidateName.lastName}"/>
+                <td th:text="${candidates.fileType}"/>
                 <td>
                     <a th:href="${'/candidate/' + candidates.candidateId}"
                        class="btn btn-light btn-sm mb-3">

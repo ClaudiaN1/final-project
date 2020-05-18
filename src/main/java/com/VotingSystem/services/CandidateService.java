@@ -1,6 +1,7 @@
 package com.VotingSystem.services;
 
 import com.VotingSystem.entitiesView.Candidate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,5 +16,12 @@ public interface CandidateService {
     Candidate saveCandidate(Candidate candidate);
 
     void deleteCandidate(Long id);
+
+    boolean saveDataFromUploadFile(MultipartFile file);
+
+
+/*
+    void saveCandidateData();
+*/
 
 }

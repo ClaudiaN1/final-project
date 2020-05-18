@@ -12,4 +12,14 @@ public class Address {
     public String buildingNumber;
     public String stairCase;
     public String apartment;
+
+    public Address(String street, String buildingNumber, String stairCase, String apartment) {
+        this.street = street;
+        this.buildingNumber = buildingNumber;
+        this.stairCase = stairCase;
+        this.apartment = apartment;
+    }
+
+    public Address() {
+    }
 }

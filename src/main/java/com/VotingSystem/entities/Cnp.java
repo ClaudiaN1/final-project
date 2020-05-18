@@ -10,4 +10,10 @@ public class Cnp {
 
     private String cnp;
 
+    public Cnp(String cnp) {
+        this.cnp = cnp;
+    }
+
+    public Cnp() {
+    }
 }

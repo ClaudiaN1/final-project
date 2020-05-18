@@ -4,11 +4,10 @@ import com.VotingSystem.entities.Cnp;
 import com.VotingSystem.entities.Name;
 import com.VotingSystem.entities.SeriesNumbers;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -26,20 +25,23 @@ public class Candidate {
     private Name candidateName;
 
     @Embedded
-    @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "cnp", column = @Column(name = "CNP"))
     })
     private Cnp candidateCnp;
 
     @Embedded
-    @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "series", column = @Column(name = "SERIES")),
             @AttributeOverride(name = "numbers", column = @Column(name = "NUMBERS"))
 
     })
     private SeriesNumbers candidateSeriesNumbers;
+
+    private String fileType;
+
+    @Transient
+    private MultipartFile file;
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Voter> voters;
@@ -56,4 +58,14 @@ public class Candidate {
             @AttributeOverride(name = "apartment", column = @Column(name = "APARTMENT"))
     })
     private Address candidateAddress;*/
+
+    public Candidate() {
+    }
+
+    public Candidate(Name candidateName, Cnp candidateCnp, SeriesNumbers candidateSeriesNumbers, String fileType) {
+        this.candidateName = candidateName;
+        this.candidateCnp = candidateCnp;
+        this.candidateSeriesNumbers = candidateSeriesNumbers;
+        this.fileType = fileType;
+    }
 }
