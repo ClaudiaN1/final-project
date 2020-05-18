@@ -62,7 +62,7 @@ public class CandidateController {
     }
 
     @RequestMapping(value = "fileupload", method = RequestMethod.POST)
-    public String uploadFile(@ModelAttribute Candidate candidate, RedirectAttributes redirectAttributes) {
+    public String uploadFile(@ModelAttribute("candidate") Candidate candidate, RedirectAttributes redirectAttributes) {
         boolean isFlag = candidateService.saveDataFromUploadFile(candidate.getFile());
         if (isFlag) {
             redirectAttributes.addFlashAttribute("successMessage", "File Upload Successfully!");

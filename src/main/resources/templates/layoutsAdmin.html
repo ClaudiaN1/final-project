@@ -16,14 +16,15 @@
           integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styl.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bodyStyle.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styleForm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/StyleForm.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><style>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
         body {
             font-family: "Lato", sans-serif;
             transition: background-color .5s;
@@ -78,30 +79,30 @@
 
 <body>
 <div th:fragment="navbar">
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-    <a th:href="@{/candidate/new}">New Candidate</a>
-</div>
-<div id="main">
-    <span style="font-size:30px;cursor:pointer; color: #f1f1f1;" onclick="openNav()">&#9776; open</span>
-</div>
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-    }
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+        <a th:href="@{/candidate/new}">New Candidate</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #f1f1f1;" onclick="openNav()">&#9776; open</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
 
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
-        document.body.style.backgroundColor = "pink";
-    }
-</script>
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+            document.body.style.backgroundColor = "pink";
+        }
+    </script>
 </div>
 <!--<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
     <button class="navbar-toggler mr-2"

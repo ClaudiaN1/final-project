@@ -3,7 +3,7 @@ package com.VotingSystem.controllers;
 import com.VotingSystem.entitiesView.entitiesDTO.PasswordForgotDto;
 import com.VotingSystem.entitiesView.entitiesSecurity.Email;
 import com.VotingSystem.entitiesView.entitiesSecurity.PasswordResetToken;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
 import com.VotingSystem.repositories.PasswordResetTokenRepository;
 import com.VotingSystem.services.EmailService;
 import com.VotingSystem.services.UserService;
@@ -49,26 +49,26 @@ public class PasswordForgotController {
             return "forgot-password";
         }
 
-        Users users = userService.findByEmail(form.getEmail());
-        if (users == null){
+        User user = userService.findByEmail(form.getEmail());
+        if (user == null){
             result.rejectValue("email", null, "We could not find an account for that e-mail address.");
             return "forgot-password";
         }
 
         PasswordResetToken token = new PasswordResetToken();
         token.setToken(UUID.randomUUID().toString());
-        token.setUsers(users);
+        token.setUser(user);
         token.setExpiryDate(30);
         tokenRepository.save(token);
 
         Email mail = new Email();
         mail.setFrom("no-reply@memorynotfound.com");
-        mail.setTo(users.getEmail());
+        mail.setTo(user.getEmail());
         mail.setSubject("Password reset request");
 
         Map<String, Object> model = new HashMap<>();
         model.put("token", token);
-        model.put("user", users);
+        model.put("user", user);
         model.put("signature", "https://memorynotfound.com");
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.put("resetUrl", url + "/reset-password?token=" + token.getToken());

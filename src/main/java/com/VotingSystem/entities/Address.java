@@ -1,10 +1,7 @@
 package com.VotingSystem.entities;
 
-import lombok.Data;
-
 import javax.persistence.Embeddable;
 
-@Data
 @Embeddable
 public class Address {
 
@@ -12,6 +9,38 @@ public class Address {
     public String buildingNumber;
     public String stairCase;
     public String apartment;
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getStairCase() {
+        return stairCase;
+    }
+
+    public void setStairCase(String stairCase) {
+        this.stairCase = stairCase;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
 
     public Address(String street, String buildingNumber, String stairCase, String apartment) {
         this.street = street;

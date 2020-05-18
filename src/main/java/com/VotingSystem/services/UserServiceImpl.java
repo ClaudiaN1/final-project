@@ -2,7 +2,7 @@ package com.VotingSystem.services;
 
 import com.VotingSystem.entitiesView.entitiesDTO.UserRegistrationDto;
 import com.VotingSystem.entitiesView.entitiesSecurity.Role;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
 import com.VotingSystem.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,18 +26,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public Users findByEmail(String email){
+    public User findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
-    public Users save(UserRegistrationDto registration){
-        Users users = new Users();
-        users.setFirstName(registration.getFirstName());
-        users.setLastName(registration.getLastName());
-        users.setEmail(registration.getEmail());
-        users.setPassword(passwordEncoder.encode(registration.getPassword()));
-        users.setRoles(asList(new Role("ROLE_USER")));
-        return userRepository.save(users);
+    public User save(UserRegistrationDto registration){
+        User user = new User();
+        user.setFirstName(registration.getFirstName());
+        user.setLastName(registration.getLastName());
+        user.setEmail(registration.getEmail());
+        user.setPassword(passwordEncoder.encode(registration.getPassword()));
+        user.setRoles(asList(new Role("ROLE_USER")));
+        return userRepository.save(user);
     }
 
     @Override
@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Users users = userRepository.findByEmail(email);
-        if (users == null){
+        User user = userRepository.findByEmail(email);
+        if (user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(users.getEmail(),
-                users.getPassword(),
-                mapRolesToAuthorities(users.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                user.getPassword(),
+                mapRolesToAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){

@@ -2,7 +2,7 @@ package com.VotingSystem.controllers;
 
 import com.VotingSystem.entitiesView.entitiesDTO.PasswordResetDto;
 import com.VotingSystem.entitiesView.entitiesSecurity.PasswordResetToken;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
 import com.VotingSystem.repositories.PasswordResetTokenRepository;
 import com.VotingSystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +63,9 @@ public class PasswordResetController {
         }
 
         PasswordResetToken token = tokenRepository.findByToken(form.getToken());
-        Users users = token.getUsers();
+        User user = token.getUser();
         String updatedPassword = passwordEncoder.encode(form.getPassword());
-        userService.updatePassword(updatedPassword, users.getId());
+        userService.updatePassword(updatedPassword, user.getId());
         tokenRepository.delete(token);
 
         return "redirect:/login?resetSuccess";

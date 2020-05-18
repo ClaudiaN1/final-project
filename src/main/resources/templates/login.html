@@ -8,20 +8,20 @@
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>
- <!--   <style>
-        body {
-        / / background: #3e3e3e;
-            color: white;
-            background-image: linear-gradient(to right bottom, #030506, #131415, #1d1f1f, #27292a, #323435, #3c3e3f, #464849, #505254, #5c5e60, #686a6c, #747678, #818385);
-        }
-    </style>-->
+    <!--   <style>
+           body {
+           / / background: #3e3e3e;
+               color: white;
+               background-image: linear-gradient(to right bottom, #030506, #131415, #1d1f1f, #27292a, #323435, #3c3e3f, #464849, #505254, #5c5e60, #686a6c, #747678, #818385);
+           }
+       </style>-->
     <style>
         body {
             font-family: "Lato", sans-serif;
             transition: background-color .5s;
-           /* background-image: linear-gradient(to right bottom, #092f55, #3a5579, #667f9e, #94aac5, #c4d8ed);
-            height: 100%;
-            margin: 0;*/
+            /* background-image: linear-gradient(to right bottom, #092f55, #3a5579, #667f9e, #94aac5, #c4d8ed);
+             height: 100%;
+             margin: 0;*/
         }
 
         .bg {
@@ -80,77 +80,77 @@
 </head>
 <body>
 <div class="bg">
-<nav th:replace="layoutsAdmin :: navbar"></nav>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="text-center">
-                        <h3><i class="glyphicon glyphicon-lock" style="font-size:2em;"></i></h3>
-                        <h2 class="text-center">Login</h2>
-                        <div class="panel-body">
+    <nav th:replace="layoutsAdmin :: navbar"></nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <h3><i class="glyphicon glyphicon-lock" style="font-size:2em;"></i></h3>
+                            <h2 class="text-center">Login</h2>
+                            <div class="panel-body">
 
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger">
-                                    Invalid username or password.
-                                </div>
-                            </div>
-                            <div th:if="${param.logout}">
-                                <div class="alert alert-info">
-                                    You have been logged out.
-                                </div>
-                            </div>
-                            <div th:if="${param.resetSuccess}">
-                                <div class="alert alert-info">
-                                    You successfully reset your password.
-                                </div>
-                            </div>
-                            <form class="form-signin" method="post" action="/login">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">@</span>
-                                        <input id="username"
-                                               name="username"
-                                               autofocus="autofocus"
-                                               class="form-control"
-                                               placeholder="Username"/>
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger">
+                                        Invalid username or password.
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
+                                <div th:if="${param.logout}">
+                                    <div class="alert alert-info">
+                                        You have been logged out.
+                                    </div>
+                                </div>
+                                <div th:if="${param.resetSuccess}">
+                                    <div class="alert alert-info">
+                                        You successfully reset your password.
+                                    </div>
+                                </div>
+                                <form class="form-signin" method="post" action="/login">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">@</span>
+                                            <input id="username"
+                                                   name="username"
+                                                   autofocus="autofocus"
+                                                   class="form-control"
+                                                   placeholder="Username"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
                                          <span class="input-group-addon">
                                              <i class="glyphicon glyphicon-lock"></i>
                                          </span>
-                                        <input id="password"
-                                               name="password"
-                                               class="form-control"
-                                               placeholder="Password"
-                                               type="password"/>
+                                            <input id="password"
+                                                   name="password"
+                                                   class="form-control"
+                                                   placeholder="Password"
+                                                   type="password"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-block">Login</button>
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success btn-block">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            New user? <a href="/" th:href="@{/registration}">Register</a>
+                        </div>
+                        <div class="col-md-12">
+                            Forgot password? <a href="/" th:href="@{/forgot-password}">Reset password</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    New users? <a href="/" th:href="@{/registration}">Register</a>
-                </div>
-                <div class="col-md-12">
-                    Forgot password? <a href="/" th:href="@{/forgot-password}">Reset password</a>
-                </div>
+
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </div>
 </body>
 </html>
-

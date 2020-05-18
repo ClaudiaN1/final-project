@@ -38,7 +38,7 @@ public class Candidate {
     })
     private SeriesNumbers candidateSeriesNumbers;
 
-    private String fileType;
+   // private String fileType;
 
     @Transient
     private MultipartFile file;
@@ -46,10 +46,55 @@ public class Candidate {
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Voter> voters;
 
+    public long getCandidateId() {
+        return candidateId;
+    }
 
+    public void setCandidateId(long candidateId) {
+        this.candidateId = candidateId;
+    }
 
+    public Name getCandidateName() {
+        return candidateName;
+    }
 
-     /* @Embedded
+    public void setCandidateName(Name candidateName) {
+        this.candidateName = candidateName;
+    }
+
+    public Cnp getCandidateCnp() {
+        return candidateCnp;
+    }
+
+    public void setCandidateCnp(Cnp candidateCnp) {
+        this.candidateCnp = candidateCnp;
+    }
+
+    public SeriesNumbers getCandidateSeriesNumbers() {
+        return candidateSeriesNumbers;
+    }
+
+    public void setCandidateSeriesNumbers(SeriesNumbers candidateSeriesNumbers) {
+        this.candidateSeriesNumbers = candidateSeriesNumbers;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public List<Voter> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(List<Voter> voters) {
+        this.voters = voters;
+    }
+
+    /* @Embedded
     @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "STREET")),
@@ -62,10 +107,10 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Name candidateName, Cnp candidateCnp, SeriesNumbers candidateSeriesNumbers, String fileType) {
+    public Candidate(Name candidateName, Cnp candidateCnp, SeriesNumbers candidateSeriesNumbers) {
         this.candidateName = candidateName;
         this.candidateCnp = candidateCnp;
         this.candidateSeriesNumbers = candidateSeriesNumbers;
-        this.fileType = fileType;
     }
+
 }

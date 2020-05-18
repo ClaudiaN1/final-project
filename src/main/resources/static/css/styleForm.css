@@ -26,7 +26,8 @@ body {
     font-size: 62.5%;
     line-height: 1;
     color: #585858;
-    padding: 22px 10px 55px;
+    padding: 22px 10px;
+    padding-bottom: 55px;
 }
 
 ::selection {

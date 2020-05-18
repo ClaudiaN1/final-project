@@ -39,7 +39,6 @@
             <tr>
                 <th>Candidate Name</th>
                 <th>Last Name</th>
-                <th>File Type</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -47,7 +46,6 @@
             <tr th:each="candidates : ${candidates}">
                 <td th:text="${candidates.candidateName.firstName}"/>
                 <td th:text="${candidates.candidateName.lastName}"/>
-                <td th:text="${candidates.fileType}"/>
                 <td>
                     <a th:href="${'/candidate/' + candidates.candidateId}"
                        class="btn btn-light btn-sm mb-3">

@@ -1,14 +1,14 @@
 package com.VotingSystem.services;
 
 import com.VotingSystem.entitiesView.entitiesDTO.UserRegistrationDto;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    Users findByEmail(String email);
+    User findByEmail(String email);
 
-    Users save(UserRegistrationDto registration);
+    User save(UserRegistrationDto registration);
 
     void updatePassword(String password, Long userId);
 }
