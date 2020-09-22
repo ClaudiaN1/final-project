@@ -56,7 +56,7 @@ public class PasswordResetToken {
         this.expiryDate = expiryDate;
     }
 
-    public void setExpiryDate(int minutes){
+    public void setExpiryDate(int minutes) {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, minutes);
         this.expiryDate = now.getTime();

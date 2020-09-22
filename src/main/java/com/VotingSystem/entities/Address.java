@@ -5,10 +5,28 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 
+    public String country;
+    public String locality;
     public String street;
     public String buildingNumber;
     public String stairCase;
     public String apartment;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
 
     public String getStreet() {
         return street;
@@ -42,7 +60,9 @@ public class Address {
         this.apartment = apartment;
     }
 
-    public Address(String street, String buildingNumber, String stairCase, String apartment) {
+    public Address(String country, String locality, String street, String buildingNumber, String stairCase, String apartment) {
+        this.country = country;
+        this.locality = locality;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.stairCase = stairCase;

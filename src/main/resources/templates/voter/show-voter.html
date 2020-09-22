@@ -48,7 +48,7 @@
     </script>
 </div>
 <div class="container" id="shadow">
-    <h3>View Candidate</h3>
+    <h3>View Voter</h3>
     <hr>
     <table class="table table-bordered table-striped" style="text-align: center">
         <thead class="thead-light">
@@ -59,33 +59,34 @@
             <th style="text-align: center"><span>CNP</span></th>
             <th style="text-align: center"><span>Series</span></th>
             <th style="text-align: center"><span>Number</span></th>
-            <th style="text-align: center"><span>Political Party</span></th>
-            <th style="text-align: center"><span>Description</span></th>
-            <th style="text-align: center"><span>Image</span></th>
-
+            <th style="text-align: center"><span>County</span></th>
+            <th style="text-align: center"><span>Locality</span></th>
+            <th style="text-align: center"><span>Street</span></th>
+            <th style="text-align: center"><span>Street number</span></th>
+            <th style="text-align: center"><span>Block Ladder</span></th>
+            <th style="text-align: center"><span>Apartment number</span></th>
         </tr>
         </thead>
         <tbody>
         <tr style="background: whitesmoke">
-            <td class="lalign" th:text="${candidate.candidateId}">
-            <td class="lalign" th:text="${candidate.candidateName.lastName}">
-            <td class="lalign" th:text="${candidate.candidateName.firstName}">
-            <td class="lalign" th:text="${candidate.candidateCnp.cnp}">
-            <td class="lalign" th:text="${candidate.candidateSeriesNumbers.series}">
-            <td class="lalign" th:text="${candidate.candidateSeriesNumbers.numbers}">
-            <td class="lalign" th:text="${candidate.partitionName}">
-            <td class="lalign" th:text="${candidate.description}">
-            <td><img src="../../static/images/vote13.jpg"
-                     th:src="@{'/candidate/' + ${candidate.candidateId} + '/candidateImage'}"
-                     width="50" height="50"></td>
-            <!--<td class="lalign" th:text="${candidate.image}"></td>-->
-
+            <td class="lalign" th:text="${voter.voterId}">
+            <td class="lalign" th:text="${voter.voterName.lastName}">
+            <td class="lalign" th:text="${voter.voterName.firstName}">
+            <td class="lalign" th:text="${voter.voterCnp.cnp}">
+            <td class="lalign" th:text="${voter.voterSeriesNumbers.series}">
+            <td class="lalign" th:text="${voter.voterSeriesNumbers.numbers}">
+            <td class="lalign" th:text="${voter.voterAddress.country}">
+            <td class="lalign" th:text="${voter.voterAddress.locality}">
+            <td class="lalign" th:text="${voter.voterAddress.street}">
+            <td class="lalign" th:text="${voter.voterAddress.buildingNumber}">
+            <td class="lalign" th:text="${voter.voterAddress.stairCase}">
+            <td class="lalign" th:text="${voter.voterAddress.apartment}">
         </tr>
         </tbody>
     </table>
     <div class="wrapper">
-        <button class="btn btn-light btn-sm mb-3" onclick="goBack()">Previous Page</button>
-        <a th:href="${'/candidate/edit/'+ candidate.candidateId}"
+        <button class="btn btn-light btn-sm mb-3" onclick="goBack()">Previous page</button>
+        <a th:href="${'/voter/edit/'+ voter.voterId}"
            class="btn btn-light btn-sm mb-3">
             Edit
         </a>

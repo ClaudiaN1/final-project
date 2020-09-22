@@ -1,4 +1,4 @@
-package com.VotingSystem.controllers;
+package com.VotingSystem.controllers.securityControllers;
 
 import com.VotingSystem.entitiesView.entitiesDTO.PasswordForgotDto;
 import com.VotingSystem.entitiesView.entitiesSecurity.Email;
@@ -25,10 +25,24 @@ import java.util.UUID;
 @RequestMapping("/forgot-password")
 public class PasswordForgotController {
 
-    @Autowired
     private UserService userService;
-    @Autowired private PasswordResetTokenRepository tokenRepository;
-    @Autowired private EmailService emailService;
+    private PasswordResetTokenRepository tokenRepository;
+    private EmailService emailService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setTokenRepository(PasswordResetTokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     @ModelAttribute("forgotPasswordForm")
     public PasswordForgotDto forgotPasswordDto() {
@@ -41,17 +55,18 @@ public class PasswordForgotController {
     }
 
     @PostMapping
-    public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm") @Valid PasswordForgotDto form,
+    public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm")
+                                            @Valid PasswordForgotDto form,
                                             BindingResult result,
                                             HttpServletRequest request) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "forgot-password";
         }
 
         User user = userService.findByEmail(form.getEmail());
-        if (user == null){
-            result.rejectValue("email", null, "We could not find an account for that e-mail address.");
+        if (user == null) {
+            result.rejectValue("email", null, "No account was found with this email address.");
             return "forgot-password";
         }
 
@@ -64,7 +79,7 @@ public class PasswordForgotController {
         Email mail = new Email();
         mail.setFrom("no-reply@memorynotfound.com");
         mail.setTo(user.getEmail());
-        mail.setSubject("Password reset request");
+        mail.setSubject("Password reset");
 
         Map<String, Object> model = new HashMap<>();
         model.put("token", token);

@@ -1,49 +1,102 @@
-<!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Upload file</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<head th:replace="layouts :: head"></head>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
 
 <body>
-<!--
-<nav th:replace="layouts :: navbar"></nav>
--->
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
 
-<div class="container">
-        <h1>First Of All... We VOTE </h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Nr.</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="candidate : ${candidateList}">
-            <td th:text="${candidate.candidateId}"/>
-            <td th:text="${candidate.candidateName.firstName}"/>
-        </tr>
-        </tbody>
-    </table>
-    <table>
-        <thead>
-        <tr>
-            <th>CandidateID</th>
-            <th>     </th>
-            <th>Nr. of voters</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="candidate : ${candidates}">
-            <td th:text="${candidate[0]}"/>
-            <td th:text="${candidate[1]}"/>
-        </tr>
-        <tr>
-            <th>Total voters</th>
-            <th th:text="${voterCount}"></th>
-        </tr>
-        </tbody>
-    </table>
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
+
+<div class="center" style="height: 300px; width: 100%;">
+    <div>
+        <table class="content-table">
+            <th>
+                <table class="content-table">
+                    <div>
+                        <thead style="text-align: center">
+                        <tr>
+                            <th style="text-align: center">Nr.</th>
+                            <th style="text-align: center">Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="candidate : ${candidateList}">
+                            <td th:text="${candidate.candidateId}"/>
+                            <td th:text="${candidate.candidateName.lastName}"/>
+                        </tr>
+                        </tbody>
+                    </div>
+                </table>
+            </th>
+            <h1 style="text-align: center">Statistics</h1>
+            <th>
+                <table class="content-table" style="text-align: center; width: 50px;">
+                    <div>
+                        <thead style="text-align: center">
+                        <th style="text-align: center">Nr. of voters</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="candidate : ${candidates}">
+                            <td th:text="${candidate[1]}"/>
+                        </tr>
+                        </tbody>
+                    </div>
+                </table>
+            </th>
+            <tr>
+                <th>Total voters</th>
+                <th th:text="${voterCount}"></th>
+            </tr>
+        </table>
+    </div>
+</div>
 </div>
 </body>
 

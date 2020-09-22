@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
+@FieldMatch(first = "password", second = "confirmPassword", message = "Password does not match, please enter again")
 public class PasswordResetDto {
 
     @NotEmpty

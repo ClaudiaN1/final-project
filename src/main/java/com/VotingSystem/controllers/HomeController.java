@@ -1,8 +1,6 @@
 package com.VotingSystem.controllers;
 
 import com.VotingSystem.entitiesView.Candidate;
-import com.VotingSystem.entitiesView.Voter;
-import com.VotingSystem.repositories.CandidateRepository;
 import com.VotingSystem.services.CandidateService;
 import com.VotingSystem.services.VoterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Set;
-
 @Controller
 @RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
-    CandidateService candidateService;
-
-    @Autowired
+    private CandidateService candidateService;
     private VoterService voterService;
 
-    public HomeController(CandidateService candidateService) {
+    @Autowired
+    public void setCandidateService(CandidateService candidateService) {
         this.candidateService = candidateService;
+    }
+
+    @Autowired
+    public void setVoterService(VoterService voterService) {
+        this.voterService = voterService;
     }
 
     @GetMapping("/view")
@@ -35,11 +34,9 @@ public class HomeController {
         model.addAttribute("candidates",
                 candidateService.getVoterByCandidate());
 
-        Set<Voter> candidateSet = voterService.getVoters();
-        int voterCount = candidateSet.size();
-        model.addAttribute("voterCount",voterCount);
+        String countVoter = candidateService.getAll();
+        model.addAttribute("voterCount", countVoter);
 
         return "main/home";
     }
-
 }

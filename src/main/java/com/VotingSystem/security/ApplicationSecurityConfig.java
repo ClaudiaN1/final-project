@@ -1,7 +1,7 @@
 package com.VotingSystem.security;
 
 import com.VotingSystem.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,14 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.concurrent.TimeUnit;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserService userService;
 
     @Override
@@ -28,25 +26,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/css/**", "/js/**","/images/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/registration**", "/forgot-password**", "/reset-password**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/default",true)
+                .defaultSuccessUrl("/default", true)
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()
-                .rememberMe()
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-                .key("securityKey")
-                .rememberMeParameter("remember-me")
-                .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout","GET"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remember-me")
@@ -55,12 +48,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
         auth.setPasswordEncoder(passwordEncoder());
@@ -73,6 +66,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(authenticationProvider())
                 .inMemoryAuthentication()
                 .withUser("nicoricicllaudia@yahoo.ro")
-                .password(passwordEncoder().encode("password")).roles("ADMIN");
+                .password(passwordEncoder().encode("claudia")).roles("ADMIN");
     }
 }
