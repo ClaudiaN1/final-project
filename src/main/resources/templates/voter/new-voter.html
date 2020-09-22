@@ -1,71 +1,224 @@
-<!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="layouts :: head"></head>
-
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Please sign in</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" media="screen">
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
 <body>
-<nav th:replace="layouts :: navbar"></nav>
-<div class="container" id="parent">
-    <form action="/voter/save" id="form_voter" th:object="${voter}" method="POST">
-        <h1>Voter registration</h1>
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Logout</a>
+        <a th:href="@{/admin}">Sections</a>
+        <a th:href="@{/voter}">Voters</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
 
-        <div>
-            <label>
-                <span for="name">Name </span>
-                <input type="text" id="name" placeholder="First name Voter"
-                       th:field="${voter.voterName.firstName}">
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
 
-                <input type="text" placeholder="Last name Voter"
-                       th:field="${voter.voterName.lastName}">
-            </label>
+<div class="container" id="shadow">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body" style="outline: 3px dashed #0c1255" id="content-table">
+                    <div class="text-center">
+                        <span class="form-heading"></span>
+                        <h2 class="text-center" style="color: #0c1255">Add a Voter</h2>
+                        <hr style="border-top: 3px solid #ff4d0d;">
+                        <div class="panel-body">
+                            <form action="/voter/save" id="form_voter" th:object="${voter}" method="post">
+
+                                <input type="hidden" th:field="*{voterId}"/>
+                                <span>Choose a Candidate</span>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="background-color: #0c1255">
+                                            <i class="glyphicon glyphicon-user color-blue"
+                                               style="color: whitesmoke"></i>
+                                        </span>
+                                        <input id="lastName"
+                                               class="form-control"
+                                               placeholder="Last Name"
+                                               required=""
+                                               th:field="*{voterName.lastName}"
+                                               oninvalid="this.setCustomValidity('Complete the Box')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="firstName"
+                                               class="form-control"
+                                               placeholder="First Name"
+                                               required=""
+                                               th:field="*{voterName.firstName}"
+                                               oninvalid="this.setCustomValidity('Complete the Box')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="background-color: #0c1255">
+                                            <i class="fa fa-id-card" aria-hidden="true" style="color: whitesmoke"></i>
+                                        </span>
+                                        <input id="cnp"
+                                               class="form-control"
+                                               placeholder="CNP"
+                                               required=""
+                                               th:field="*{voterCnp.cnp}"
+                                               pattern="^(2|1)([0-9]{12})"
+                                               oninvalid="this.setCustomValidity('The Personal Numbers Code must begin with 1 or 2 and must contain 13 digits (0-9)')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="Series"
+                                               class="form-control"
+                                               placeholder="Series"
+                                               required=""
+                                               th:field="*{voterSeriesNumbers.series}"
+                                               pattern="([a-zA-Z]*{2})"
+                                               onblur="this.value=this.value.toUpperCase()"
+                                               oninvalid="this.setCustomValidity('The series must contain two letters')"
+                                               oninput="setCustomValidity('')"
+
+                                        /> <!--style="text-transform:uppercase"-->
+                                        <input id="Number"
+                                               class="form-control"
+                                               placeholder="Number"
+                                               required=""
+                                               th:field="*{voterSeriesNumbers.numbers}"
+                                               pattern="([0-9]*{6})"
+                                               oninvalid="this.setCustomValidity('The number must contain 6 digits (0-9)')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="background-color: #0c1255">
+                                           <i class="fa fa-map-marker" aria-hidden="true" style="color: whitesmoke"></i>
+                                        </span>
+                                        <input id="country"
+                                               class="form-control"
+                                               placeholder="County"
+                                               required=""
+                                               th:field="*{voterAddress.country}"
+                                               oninvalid="this.setCustomValidity('Complete the Box')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="locality"
+                                               class="form-control"
+                                               placeholder="Locality"
+                                               required=""
+                                               th:field="*{voterAddress.locality}"
+                                               oninvalid="this.setCustomValidity('Complete the Box')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="street"
+                                               class="form-control"
+                                               placeholder="Street"
+                                               required=""
+                                               th:field="*{voterAddress.street}"
+                                               oninvalid="this.setCustomValidity('Complete the Box, Enter the street')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="building"
+                                               class="form-control"
+                                               placeholder="Number"
+                                               required=""
+                                               th:field="*{voterAddress.buildingNumber}"
+                                               oninvalid="this.setCustomValidity('Complete the Box, enter the block / house number')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="stair"
+                                               class="form-control"
+                                               placeholder="Stair"
+                                               required=""
+                                               th:field="*{voterAddress.stairCase}"
+                                               oninvalid="this.setCustomValidity('Complete th Box, enter the block ladder')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                        <input id="apartment"
+                                               class="form-control"
+                                               placeholder="Apartment number"
+                                               required=""
+                                               th:field="*{voterAddress.apartment}"
+                                               oninvalid="this.setCustomValidity('Complete the Box, enter the apartment number')"
+                                               oninput="setCustomValidity('')"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="background-color: #0c1255">
+                                           <i class="fa fa-arrow-down" aria-hidden="true" style="color: whitesmoke"></i>
+                                        </span>
+                                        <select id="partition" class="select-css" th:field="*{partitionName}" >
+                                            <option value="Alege un PARTID">Alege un PARTID</option>
+                                            <option value="PSD">PSD</option>
+                                            <option value="PNL">PNL</option>
+                                            <option value="USR">USR</option>
+                                            <option value="ALDE">ALDE</option>
+                                            <option value="PRO">PRO</option>
+                                            <option value="UDMR">UDMR</option>
+                                            <option value="PMP">PMP</option>
+                                            <option value="PLUS">PLUS</option>
+                                        </select>
+                                    </div>
+                                </div>-->
+                                <select th:field="*{candidates}" multiple="multiple">
+                                    <option th:each="candidate:${allCandidates}"
+                                            th:value="${candidate.candidateId}"
+                                            th:text="${candidate.candidateName.firstName}">
+                                    </option>
+                                </select>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-next"
+                                            style="background-color: #ff4d0d; color: whitesmoke">
+                                        <i class="fa fa-paper-plane" style="color: whitesmoke"></i> Load
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label>
-                <span for="data">Data</span>
-                <input type="text" id="data" placeholder="CNP" th:field="${voter.voterCnp.cnp}"
-                       pattern="^(2|1)([0-9]{12})"
-                       title="Personal authentication number must start with number 1 or 2 and must contain 13 characters(0-9)">
-
-                <input type="text" placeholder="Series" th:field="${voter.voterSeriesNumbers.series}"
-                       pattern="([a-zA-Z]{2})"
-                       title="Series must contains 2 letters"
-                       style="text-transform:uppercase"
-                       onblur="this.value=this.value.toUpperCase()">
-
-                <input type="text" placeholder="Number" th:field="${voter.voterSeriesNumbers.numbers}"
-                       pattern="([0-9]{6})"
-                       title="Number must contains 6 characters(0-9)">
-            </label>
-        </div>
-
-        <div>
-            <label>
-                <span for="address">Address</span>
-                <input type="text" id="address" placeholder="Street address"
-                       th:field="${voter.voterAddress.street}">
-                <input type="text" placeholder="Building Number "
-                       th:field="${voter.voterAddress.buildingNumber}">
-                <input type="text" placeholder="Stair Case" th:field="${voter.voterAddress.stairCase}">
-                <input type="text" placeholder="Apartment " th:field="${voter.voterAddress.apartment}">
-
-                <label>
-                    <span>Choose a Candidate</span>
-                    <select th:field="*{candidates}" multiple="multiple">
-                        <option th:each="candidate:${allCandidates}"
-                                th:value="${candidate.candidateId}"
-                                th:text="${candidate.candidateName.firstName}">
-                        </option>
-                    </select>
-                </label>
-            </label>
-
-        </div>
-
-        <button type="submit"> Submit</button>
-    </form>
+    </div>
+</div>
 </div>
 </body>
-
 </html>

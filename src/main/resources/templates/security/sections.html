@@ -5,120 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/section.css}" media="screen">
+
     <style>
         body {
             font-family: "Lato", sans-serif;
             transition: background-color .5s;
-            background-image: linear-gradient(to right bottom, #092f55, #3a5579, #667f9e, #94aac5, #c4d8ed);
+            /*background-image: linear-gradient(to right bottom, #092f55, #3a5579, #667f9e, #94aac5, #c4d8ed);*/
+            /* background-image: linear-gradient(to right bottom, #0c1255, #113b78, #2e6496, #b0396d, #8ab6ca, #95bfcf, #a1c9d4, #aed2d9, #8fbfc8, #70acb7, #4e9aa6, #218896);*/
+            /*background-image: linear-gradient(to right bottom, #b063e5, #00cdeb, #00d9ef, #00e4f2, #00f0f4, #00f0f4, #00f0f4, #00f0f4, #00e4f2, #00d9ef, #00cdeb, #17c1e5);*/
+            /* background-image: linear-gradient(to right bottom, #1771e5, #6a88ea, #96a1ee, #babcf3, #dad8f8, #dad8f8, #dad8f8, #dad8f8, #babcf3, #96a1ee, #6a88ea, #1771e5);*/
+            /* background-image: linear-gradient(to right bottom, #01060d, #11151b, #1a2027, #232b34, #2d3642, #2f3541, #313540, #33343f, #2b282f, #201c20, #151113, #000000);*/
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
             height: 100%;
             margin: 0;
-        }
-        .section {
-            border: none;
-            background: #3a5579;
-            color: white;
-            font-weight: 100;
-            padding: 80px;
-            text-transform: uppercase;
-            border-radius: 6px;
-            display: inline-block;
-            transition: all 0.3s ease 0s;
-            margin: 10px;
-            top: 50%;
-        }
-
-        .section:hover {
-            color: #404040;
-            font-weight: 700;
-            letter-spacing: 3px;
-            background: white;
-            -webkit-box-shadow: 0px 5px 40px -10px rgba(196,216,237,1);
-            -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-            transition: all 0.3s ease 0s;
-        }
-
-        .center {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
-    </style>
-    <style>
-        body,html {
-            font-family: "Lato", sans-serif;
-            transition: background-color .5s;
-            background-image: linear-gradient(to right bottom, #092f55, #3a5579, #667f9e, #94aac5, #c4d8ed);
-            height: 100%;
-            margin: 0;
-        }
-
-        /*.bg {
-            background-image: url("../static/images/vote3.jpg");
-
-            height: 100%;
-
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }*/
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .sidenav a:hover {
-            color: #f1f1f1;
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
-
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
         }
     </style>
 </head>
 
 <body>
-<nav th:replace="layoutsAdmin :: navbar"></nav>
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Logout</a>
+        <a th:href="@{/candidate}">Candidates</a>
+        <a th:href="@{/voter}">Voters</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
 <div class="center">
     <div class="container_butt" align="center">
-        <a class="section" href="/candidate"
-           target="_blank" rel="nofollow noopener"> Candidate </a>
-        <a class="section" href="/voter"
-           target="_blank" rel="nofollow noopener"> Voter </a>
+        <a class="sectionCandidate" href="/candidate"
+           target="_blank" rel="nofollow noopener"><h5>CANDIDATES</h5></a>
+        <a class="sectionCandidate" href="/voter"
+           target="_blank" rel="nofollow noopener"><h5>VOTERS</h5></a>
     </div>
 </div>
 </body>

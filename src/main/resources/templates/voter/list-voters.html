@@ -1,35 +1,236 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Please sign in</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/searchANDpag.css}" media="screen">
 
-<head th:replace="layouts :: head"></head>
+    <script type="text/javascript" src="search.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: auto;
+        }
+    </style>
+</head>
 
 <body>
-<nav th:replace="layouts :: navbar"></nav>
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Logout</a>
+        <a th:href="@{/admin/}">Sections</a>
+        <a th:href="@{/voter/new}">New Voter</a>
+        <a th:href="@{/voter/upload}">Upload CSV file</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
 
-<div class="container">
-    <h3>Voters</h3>
-    <hr>
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
+
+<div class="center, container" id="shadow">
+
     <a th:href="@{/voter/new}"
-       class="btn btn-light btn-sm mb-3">
+       class="btn btn-light btn-sm mb-3"
+       style="background-color: #ff4d0d; color: whitesmoke; margin-right:5px;">
         New Voter
     </a>
-    <table class="table table-bordered table-striped">
-        <thead class="thead-light">
-        <tr>
-            <th>Voter Name</th>
-            <th>Last Name</th>
-            <th>CNP</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="voters : ${voters}">
-            <td th:text="${voters.voterName.firstName}"/>
-            <td th:text="${voters.voterName.lastName}"/>
-            <td th:text="${voters.voterCnp.cnp}"/>
-        </tr>
-        </tbody>
-    </table>
+    <a th:href="@{/voter/upload}"
+       class="btn btn-light btn-sm mb-3"
+       style="background-color: #ff4d0d; color: whitesmoke">
+        Upload CSV file</a>
+
+    <a th:href="@{/logout}"
+       class="btn btn-light btn-sm mb-3"
+       style="float: right; background-color: #45a049; color: whitesmoke">
+        Log Out
+    </a>
+    <a th:href="@{/admin/}"
+       class="btn btn-light btn-sm mb-3"
+       style="margin-right:5px; float: right; background-color: #0c1255; color: whitesmoke">
+        Sections
+    </a>
+
+    <div th:if="${not #lists.isEmpty(voters)}">
+        <h3 style="text-align: center">Voters</h3>
+        <hr>
+        <div class="cont">
+            <input type="text" id="myInput" onkeyup="myFunction()"
+                   placeholder="Search for CNP.." title="Type in a name">
+            <div class="search"></div>
+        </div>
+        <table class="content-table" id="pager">
+            <div>
+                <thead style="text-align: center">
+                <tr>
+                    <th style="text-align: center">LastName</th>
+                    <th style="text-align: center">FirstName</th>
+                    <th style="text-align: center">CNP</th>
+                    <th style="text-align: center">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="myTable">
+                <tr th:each="voters : ${voters}" style="text-align: center">
+                    <td th:text="${voters.voterName.lastName}"/>
+                    <td th:text="${voters.voterName.firstName}"/>
+                    <td th:text="${voters.voterCnp.cnp}"></td>
+                    <td>
+                        <a th:href="${'/voter/' + voters.voterId}"
+                           class="btn btn-light btn-sm mb-3">
+                            View
+                        </a>
+                        <a th:href="${'/voter/edit/'+ voters.voterId}"
+                           class="btn btn-light btn-sm mb-3" style="background-color: #5f74a0; color: whitesmoke">
+                            Edit
+                        </a>
+                        <a th:href="${'/voter/delete/' + voters.voterId}"
+                           class="btn btn-light btn-sm mb-3"
+                           onclick="return confirm('Ești sigur?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+        <div class="pager-nav" id="pageNavPosition"></div>
+    </div>
 </div>
+<script>
+    function Pager(tableName, itemsPerPage) {
+        'use strict';
+
+        this.tableName = tableName;
+        this.itemsPerPage = itemsPerPage;
+        this.currentPage = 1;
+        this.pages = 0;
+        this.inited = false;
+
+        this.showRecords = function (from, to) {
+            let rows = document.getElementById(tableName).rows;
+
+            // i starts from 1 to skip table header row
+            for (let i = 1; i < rows.length; i++) {
+                if (i < from || i > to) {
+                    rows[i].style.display = 'none';
+                } else {
+                    rows[i].style.display = '';
+                }
+            }
+        };
+
+        this.showPage = function (pageNumber) {
+            if (!this.inited) {
+                return;
+            }
+
+            let oldPageAnchor = document.getElementById('pg' + this.currentPage);
+            oldPageAnchor.className = 'pg-normal';
+
+            this.currentPage = pageNumber;
+            let newPageAnchor = document.getElementById('pg' + this.currentPage);
+            newPageAnchor.className = 'pg-selected';
+
+            let from = (pageNumber - 1) * itemsPerPage + 1;
+            let to = from + itemsPerPage - 1;
+            this.showRecords(from, to);
+
+            let pgNext = document.querySelector('.pg-next'),
+                pgPrev = document.querySelector('.pg-prev');
+
+            if (this.currentPage == this.pages) {
+                pgNext.style.display = 'none';
+            } else {
+                pgNext.style.display = '';
+            }
+
+            if (this.currentPage === 1) {
+                pgPrev.style.display = 'none';
+            } else {
+                pgPrev.style.display = '';
+            }
+        };
+
+        this.prev = function () {
+            if (this.currentPage > 1) {
+                this.showPage(this.currentPage - 1);
+            }
+        };
+
+        this.next = function () {
+            if (this.currentPage < this.pages) {
+                this.showPage(this.currentPage + 1);
+            }
+        };
+
+        this.init = function () {
+            let rows = document.getElementById(tableName).rows;
+            let records = (rows.length - 1);
+
+            this.pages = Math.ceil(records / itemsPerPage);
+            this.inited = true;
+        };
+
+        this.showPageNav = function (pagerName, positionId) {
+            if (!this.inited) {
+                return;
+            }
+            let element = document.getElementById(positionId),
+                pagerHtml = '<span onclick="' + pagerName +
+                    '.prev();" class="pg-normal pg-prev">&#171;</span>';
+
+            for (let page = 1; page <= this.pages; page++) {
+                pagerHtml += '<span id="pg' + page +
+                    '" class="pg-normal pg-next" onclick="' + pagerName +
+                    '.showPage(' + page + ');">' + page + '</span>';
+            }
+
+            pagerHtml += '<span onclick="' + pagerName +
+                '.next();" class="pg-normal">&#187;</span>';
+
+            element.innerHTML = pagerHtml;
+        };
+    }
+
+
+    //
+    let pager = new Pager('pager', 6);
+
+    pager.init();
+    pager.showPageNav('pager', 'pageNavPosition');
+    pager.showPage(1);
+
+</script>
 
 </body>
 </html>

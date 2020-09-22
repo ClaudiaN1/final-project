@@ -1,4 +1,4 @@
-package com.VotingSystem.controllers;
+package com.VotingSystem.controllers.adminControllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,6 @@ public class DefaultController {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/admin/";
         }
-        return "redirect:/user/";
+        return "redirect:/utilizator/";
     }
-
 }

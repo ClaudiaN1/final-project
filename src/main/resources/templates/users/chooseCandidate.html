@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Please sign in</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/chooseCandidate.css}" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Log Out</a>
+        <a th:href="@{/admin/}">Sections</a>
+        <a th:href="@{/candidate/new}">New Candidate</a>
+        <a th:href="@{/candidate/upload}">Upload a file</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
+
+
+<div class=" container" id="shadow">
+    <div>
+        <a th:href="@{/logout}"
+           class="btn btn-light btn-sm mb-3"
+           style="float: right; background-color: #45a049; color: whitesmoke">
+            Log Out
+        </a>
+        <a th:href="@{/utilizator/}"
+           class="btn btn-light btn-sm mb-3"
+           style="margin-right:5px; float: right; background-color: #0c1255; color: whitesmoke">
+            Sections
+        </a>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(allCandidates)}">
+        <hr>
+        <h1 style="text-align: center">Vote</h1>
+        <hr>
+        <h2 style="text-align: center">Choose a Candidate</h2>
+
+        <form action="/userVote/save" th:object="${voter}" method="post">
+            <select th:field="*{candidates}" multiple="multiple" style="height: 120px; text-align: center; ">
+                <option th:each="candidate:${allCandidates}"
+                        th:value="${candidate.candidateId}"
+                        th:text="${candidate.candidateName.lastName} + ${candidate.partitionName}">
+                </option>
+            </select>
+            <div class="text-center ">
+                <button name="myButton" type="submit"
+                        class="btn btn-next"
+                        style="background-color: #ff4d0d; color: whitesmoke">
+                    <i class="fa fa-paper-plane" style="color: whitesmoke"></i> Load
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

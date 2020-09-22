@@ -1,8 +1,8 @@
-package com.VotingSystem.controllers;
+package com.VotingSystem.controllers.securityControllers;
 
 import com.VotingSystem.entitiesView.entitiesDTO.PasswordResetDto;
 import com.VotingSystem.entitiesView.entitiesSecurity.PasswordResetToken;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
 import com.VotingSystem.repositories.PasswordResetTokenRepository;
 import com.VotingSystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,24 @@ import javax.validation.Valid;
 @RequestMapping("/reset-password")
 public class PasswordResetController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private PasswordResetTokenRepository tokenRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setTokenRepository(PasswordResetTokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @ModelAttribute("passwordResetForm")
     public PasswordResetDto passwordReset() {
@@ -39,9 +49,9 @@ public class PasswordResetController {
                                            Model model) {
 
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
-        if (resetToken == null){
+        if (resetToken == null) {
             model.addAttribute("error", "Could not find password reset token.");
-        } else if (resetToken.isExpired()){
+        } else if (resetToken.isExpired()) {
             model.addAttribute("error", "Token has expired, please request a new password reset.");
         } else {
             model.addAttribute("token", resetToken.getToken());
@@ -56,16 +66,16 @@ public class PasswordResetController {
                                       BindingResult result,
                                       RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);
             redirectAttributes.addFlashAttribute("passwordResetForm", form);
             return "redirect:/reset-password?token=" + form.getToken();
         }
 
         PasswordResetToken token = tokenRepository.findByToken(form.getToken());
-        Users users = token.getUsers();
+        User user = token.getUser();
         String updatedPassword = passwordEncoder.encode(form.getPassword());
-        userService.updatePassword(updatedPassword, users.getId());
+        userService.updatePassword(updatedPassword, user.getId());
         tokenRepository.delete(token);
 
         return "redirect:/login?resetSuccess";

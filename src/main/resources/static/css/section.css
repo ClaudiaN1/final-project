@@ -1,20 +1,56 @@
 .sectionCandidate {
-  border: none;
-  background: #404040;
-  color: #ffffff !important;
-  font-weight: 100;
-  padding: 20px;
-  text-transform: uppercase;
-  border-radius: 6px;
-  display: inline-block;
-  transition: all 0.3s ease 0s;
+    border: none;
+    background: #0c1255;
+    color: #ffffff !important;
+    font-weight: 100;
+    padding: 80px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    margin: 10px;
+
 }
+
 .sectionCandidate:hover {
-  color: #404040 !important;
-  font-weight: 700 !important;
-  letter-spacing: 3px;
-  background: none;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  transition: all 0.3s ease 0s;
+    color: #404040 !important;
+    font-weight: 700 !important;
+    letter-spacing: 10px;
+    background: white;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(196, 216, 237, 1);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    transition: all 0.3s ease 0s;
 }
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* .section {
+            border: none;
+            background: #3a5579;
+            color: white;
+            font-weight: 100;
+            padding: 80px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
+            margin: 10px;
+            top: 50%;
+        }
+
+        .section:hover {
+            color: #404040;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: white;
+            -webkit-box-shadow: 0px 5px 40px -10px rgba(196,216,237,1);
+            -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+            transition: all 0.3s ease 0s;
+        }*/

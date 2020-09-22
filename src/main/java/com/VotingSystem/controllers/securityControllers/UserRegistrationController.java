@@ -1,7 +1,8 @@
-package com.VotingSystem.controllers;
+package com.VotingSystem.controllers.securityControllers;
 
 import com.VotingSystem.entitiesView.entitiesDTO.UserRegistrationDto;
-import com.VotingSystem.entitiesView.entitiesSecurity.Users;
+import com.VotingSystem.entitiesView.entitiesSecurity.User;
+import com.VotingSystem.services.EmailService;
 import com.VotingSystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,18 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
-    @Autowired
     private UserService userService;
+    private EmailService emailService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
@@ -32,20 +43,22 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
-                                      BindingResult result){
+    public String registerUserAccount(@ModelAttribute("user")
+                                      @Valid UserRegistrationDto userDto,
+                                      BindingResult result) {
 
-        Users existing = userService.findByEmail(userDto.getEmail());
-        if (existing != null){
-            result.rejectValue("email", null, "There is already an account registered with that email");
+        User existing = userService.findByEmail(userDto.getEmail());
+        if (existing != null) {
+            result.rejectValue("email", null, "An account has already been created for this email");
         }
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "registration";
         }
 
         userService.save(userDto);
-        return "redirect:/registration?success";
+        return "redirect:/registration";
     }
+
 
 }

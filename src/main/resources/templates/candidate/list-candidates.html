@@ -1,31 +1,105 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Please sign in</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" media="screen">
 
-<head th:replace="layoutsAdmin :: head"></head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-image: linear-gradient(to right bottom, #8bb3da, #9ebfdf, #b1cbe4, #c4d7ea, #d7e3ef, #dce7f1, #e2eaf4, #e7eef6, #e1ebf6, #dae7f6, #d4e4f6, #cde0f6);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: auto;
+        }
+    </style>
+</head>
 
 <body>
-<nav th:replace="layoutsAdmin :: navbar"></nav>
+<div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a th:href="@{/logout}">Log Out</a>
+        <a th:href="@{/admin/}">Sections</a>
+        <a th:href="@{/candidate/new}">New Candidate</a>
+        <a th:href="@{/candidate/upload}">Upload CSV file</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer; color: #0c1255;" onclick="openNav()">&#9776; Menu</span>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgb(12,18,85)";
+        }
 
-<div class="container">
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+</div>
+
+<div class="center, container" id="shadow">
+
     <a th:href="@{/candidate/new}"
-       class="btn btn-light btn-sm mb-3">
+       class="btn btn-light btn-sm mb-3"
+       style="background-color: #ff4d0d; color: whitesmoke; margin-right:5px;">
         New Candidate
     </a>
+    <a th:href="@{/candidate/upload}"
+       class="btn btn-light btn-sm mb-3"
+       style="background-color: #ff4d0d; color: whitesmoke">
+        Upload CSV file</a>
+
+    <a th:href="@{/logout}"
+       class="btn btn-light btn-sm mb-3"
+       style="float: right; background-color: #45a049; color: whitesmoke">
+        Logout
+    </a>
+    <a th:href="@{/admin/}"
+       class="btn btn-light btn-sm mb-3"
+       style="margin-right:5px; float: right; background-color: #0c1255; color: whitesmoke">
+        Sections
+    </a>
+
     <div th:if="${not #lists.isEmpty(candidates)}">
-        <h3>Candidates</h3>
+        <h3 style="text-align: center">Candidates</h3>
         <hr>
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
+        <table class="content-table">
+            <thead style="text-align: center">
             <tr>
-                <th>Candidate Name</th>
-                <th>Last Name</th>
-                <th>Actions</th>
+                <th style="text-align: center">Last Name</th>
+                <th style="text-align: center">First Name</th>
+                <th style="text-align: center">Political Party</th>
+                <th style="text-align: center">Image</th>
+                <th style="text-align: center">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="candidates : ${candidates}">
-                <td th:text="${candidates.candidateName.firstName}"/>
+            <tr th:each="candidates : ${candidates}" style="text-align: center">
                 <td th:text="${candidates.candidateName.lastName}"/>
+                <td th:text="${candidates.candidateName.firstName}"/>
+                <td th:text="${candidates.partitionName}"></td>
+                <td><img src="../../static/images/vote13.jpg"
+                         th:src="@{'/candidate/' + ${candidates.candidateId} + '/candidateImage'}"
+                         width="50" height="50"></td>
                 <td>
                     <a th:href="${'/candidate/' + candidates.candidateId}"
                        class="btn btn-light btn-sm mb-3">
@@ -36,11 +110,15 @@
                         Edit
                     </a>
                     <a th:href="${'/candidate/delete/' + candidates.candidateId}"
-                       class="btn btn-light btn-sm mb-3">
+                       class="btn btn-light btn-sm mb-3"
+                       onclick="return confirm('Are you sure you want to complete this deletion action ?')">
                         Delete
                     </a>
+                    <a th:href="@{'/candidate/' + ${candidates.candidateId} + '/image'}"
+                       class="btn btn-light btn-sm mb-3" href="#" role="button">
+                        Change the Image
+                    </a>
                 </td>
-
             </tr>
             </tbody>
         </table>

@@ -2,8 +2,10 @@ package com.VotingSystem.services;
 
 import com.VotingSystem.entitiesView.entitiesSecurity.Email;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -14,11 +16,18 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class EmailService {
 
-    @Autowired
     private JavaMailSender emailSender;
+    private SpringTemplateEngine templateEngine;
 
     @Autowired
-    private SpringTemplateEngine templateEngine;
+    public void setEmailSender(JavaMailSender emailSender) {
+        this.emailSender = emailSender;
+    }
+
+    @Autowired
+    public void setTemplateEngine(SpringTemplateEngine templateEngine) {
+        this.templateEngine = templateEngine;
+    }
 
     public void sendEmail(Email mail) {
         try {
@@ -37,9 +46,13 @@ public class EmailService {
             helper.setFrom(mail.getFrom());
 
             emailSender.send(message);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    @Async
+    public void sendMail(SimpleMailMessage mail) {
+        emailSender.send(mail);
+    }
 }

@@ -3,14 +3,12 @@ package com.VotingSystem.entitiesView;
 import com.VotingSystem.entities.Cnp;
 import com.VotingSystem.entities.Name;
 import com.VotingSystem.entities.SeriesNumbers;
-import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
-@Data
 @Entity
 public class Candidate {
 
@@ -26,14 +24,12 @@ public class Candidate {
     private Name candidateName;
 
     @Embedded
-    @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "cnp", column = @Column(name = "CNP"))
     })
     private Cnp candidateCnp;
 
     @Embedded
-    @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "series", column = @Column(name = "SERIES")),
             @AttributeOverride(name = "numbers", column = @Column(name = "NUMBERS"))
@@ -41,13 +37,112 @@ public class Candidate {
     })
     private SeriesNumbers candidateSeriesNumbers;
 
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private String partitionName;
+
+    private String description;
+
+    @Lob
+    private Byte[] image;
+
+    @Transient
+    private MultipartFile file;
+
+    private int numara;
+
+   /* @OneToMany(mappedBy = "candidate", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Voter> voters;*/
+
+    @ManyToMany(cascade = {CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "candidate_voter",
+            joinColumns = @JoinColumn(name = "candidate_id"),
+            inverseJoinColumns = @JoinColumn(name = "voter_id"))
     private List<Voter> voters;
 
+    public Byte[] getImage() {
+        return image;
+    }
 
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
 
+    public long getCandidateId() {
+        return candidateId;
+    }
 
-     /* @Embedded
+    public void setCandidateId(long candidateId) {
+        this.candidateId = candidateId;
+    }
+
+    public Name getCandidateName() {
+        return candidateName;
+    }
+
+    public void setCandidateName(Name candidateName) {
+        this.candidateName = candidateName;
+    }
+
+    public Cnp getCandidateCnp() {
+        return candidateCnp;
+    }
+
+    public void setCandidateCnp(Cnp candidateCnp) {
+        this.candidateCnp = candidateCnp;
+    }
+
+    public SeriesNumbers getCandidateSeriesNumbers() {
+        return candidateSeriesNumbers;
+    }
+
+    public void setCandidateSeriesNumbers(SeriesNumbers candidateSeriesNumbers) {
+        this.candidateSeriesNumbers = candidateSeriesNumbers;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public List<Voter> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(List<Voter> voters) {
+        this.voters = voters;
+    }
+
+    public String getPartitionName() {
+        return partitionName;
+    }
+
+    public void setPartitionName(String partitionName) {
+        this.partitionName = partitionName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumara() {
+        return numara;
+    }
+
+    public void setNumara(int numara) {
+        this.numara = numara;
+    }
+
+  /* @Embedded
     @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "STREET")),
@@ -56,4 +151,32 @@ public class Candidate {
             @AttributeOverride(name = "apartment", column = @Column(name = "APARTMENT"))
     })
     private Address candidateAddress;*/
+
+    public Candidate() {
+    }
+
+    public Candidate(Name candidateName, Cnp candidateCnp, SeriesNumbers candidateSeriesNumbers, String partitionName, String description) {
+        this.candidateName = candidateName;
+        this.candidateCnp = candidateCnp;
+        this.candidateSeriesNumbers = candidateSeriesNumbers;
+        this.partitionName = partitionName;
+        this.description = description;
+        this.numara = 8;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "candidateId=" + candidateId +
+                ", candidateName=" + candidateName +
+                ", candidateCnp=" + candidateCnp +
+                ", candidateSeriesNumbers=" + candidateSeriesNumbers +
+                ", partitionName='" + partitionName + '\'' +
+                ", description='" + description + '\'' +
+                ", image=" + Arrays.toString(image) +
+                ", file=" + file +
+                ", numara=" + numara +
+                ", voters=" + voters +
+                '}';
+    }
 }

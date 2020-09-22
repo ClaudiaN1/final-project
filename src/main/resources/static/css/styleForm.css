@@ -21,12 +21,13 @@ html {
 }
 
 body {
-    background: #eee url('https://www.desktopbackground.org/download/1920x1080/2013/03/23/549413_deep-blue-wallpapers-imgmob_1920x1200_h.jpg'); /* https://subtlepatterns.com/weave/ */
+    background: #cfecff; /* https://subtlepatterns.com/weave/ */
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 62.5%;
     line-height: 1;
     color: #585858;
-    padding: 22px 10px 55px;
+    padding: 22px 10px;
+    padding-bottom: 55px;
 }
 
 ::selection {
@@ -139,7 +140,7 @@ h1 {
 }
 
 #keywords thead tr th.headerSortUp span {
-    background-image:url("images/vote.jpg");
+    background-image: url("images/vote.jpg");
 }
 
 #keywords thead tr th.headerSortDown span {
